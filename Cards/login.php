@@ -21,8 +21,9 @@
 			
 			
 			$db->exec('UPDATE "users" SET "idsess"="' . session_id() . '" , "ip"="' . $_SERVER['REMOTE_ADDR'] . '" ,    "unum"="' . $unum . '" ,  "expir"="' . $expir  . '" WHERE "id"=\'' . $val['id'] . '\'');
-	
-		}
+			
+			
+			}
 		
 		
 		

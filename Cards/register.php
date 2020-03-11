@@ -25,8 +25,11 @@
 		
 			if($val['email'] != $login) {
 				
-
-				$db->exec('INSERT INTO "users"("id","ip","idsess","email","password","unum","expir") VALUES (NULL,\'' . $_SERVER['REMOTE_ADDR'] . '\',\'' . session_id() . '\',\'' . $login . '\',\'' . $psswd . '\',\'' . $unum . '\',\'' . $expir . '\');');
+				
+				
+				$db->exec('INSERT INTO "users"("id","ip","idsess","email","password","unum","expir","valid") VALUES (NULL,\'' . $_SERVER['REMOTE_ADDR'] . '\',\'' . session_id() . '\',\'' . $login . '\',\'' . $psswd . '\',\'' . $unum . '\',\'' . $expir . '\',\'1\');');
+				$getid = $db->lastInsertRowid();
+				$db->exec('INSERT INTO "validate"("id","key","expire") VALUES (\'' . $getid . '\',\'' . $unum . '\',\'' . (time() + (60*5)) . '\');');
 				//var_dump($result->fetchArray(SQLITE3_ASSOC));
 				
 				$_SESSION['ciu'] = $unum;
@@ -35,5 +38,5 @@
 			} 
 	} 
 	
-	echo '<html><head><meta http-equiv="refresh" content="3;URL=index.php"><title></title></head><body>' . $reponse . ' Retour en page principal ...</body></htlm>';
+	echo '<html><head><meta http-equiv="refresh" content="6;URL=index.php"><title></title></head><body>' . $reponse . ' Retour en page principal ...</body></htlm>';
 ?>
