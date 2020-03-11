@@ -18,8 +18,9 @@
 			
 			$expir = time() + (3600*24);
 			$unum  = hash('sha256', session_id() . random_bytes(5) . $login . $psswd . $expir );
-
-			$db->exec('UPDATE "users" SET "idsess"="' . session_id() . '" AND SET "unum"="' . $unum . '" AND SET "expir"="' . $expir  . '" WHERE "id"=\'' . $val['id'] . '\'');
+			
+			
+			$db->exec('UPDATE "users" SET "idsess"="' . session_id() . '" , "ip"="' . $_SERVER['REMOTE_ADDR'] . '" ,    "unum"="' . $unum . '" ,  "expir"="' . $expir  . '" WHERE "id"=\'' . $val['id'] . '\'');
 	
 		}
 		

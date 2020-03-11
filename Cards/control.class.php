@@ -11,8 +11,8 @@ class control {
 		
 		
 		$nolog = true;
-		//echo '['.$_SESSION['ciu'].']' . '<br/>';
-		//echo '>'.$_COOKIE['ciu'].'<' . '<br/>';
+		echo '['.$_SESSION['ciu'].']' . '<br/>';
+		echo '>'.$_COOKIE['ciu'].'<' . '<br/>';
 		
 			if(isset($_SESSION['ciu'])){
 
