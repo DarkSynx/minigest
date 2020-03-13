@@ -8,7 +8,7 @@ class control {
 
 	public function __construct($id, &$db) {
 		//$this->_db = &$db;
-	
+	echo time(), '<br/>';
 	
 	$results = $db->query('SELECT * FROM "validate" WHERE "id" ORDER BY "id" ASC LIMIT 0, 49999');
 	while ($row = $results->fetchArray(SQLITE3_ASSOC)) {
@@ -28,7 +28,7 @@ class control {
 				$val = $result->fetchArray(SQLITE3_ASSOC);			
 				//var_dump($val);
 				
-				if($val['idsess'] == $id && $val['unum'] == $_SESSION['ciu'] && $_SESSION['ciu'] == $_COOKIE['ciu'] ) {
+				if($val['idsess'] == $id && $val['unum'] == $_SESSION['ciu'] && $_SESSION['ciu'] == $_COOKIE['ciu'] && $val['valid'] == '1') {
 					$nolog = false;
 					$this->loadpage('page de salon',['salon']);
 				}

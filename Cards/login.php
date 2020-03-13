@@ -2,8 +2,7 @@
 	session_start();
 	
 
-	$login = filter_input(INPUT_POST, 'login', FILTER_SANITIZE_EMAIL);
-	$psswd = filter_input(INPUT_POST, 'psswd', FILTER_SANITIZE_STRING);
+
 	
 	include 'mydb.class.php';
 	$db = new MyDB();
@@ -16,12 +15,13 @@
 		}
 	}
 	
-	
+	$login = filter_input(INPUT_POST, 'login', FILTER_SANITIZE_EMAIL);
+	$psswd = filter_input(INPUT_POST, 'psswd', FILTER_SANITIZE_STRING);	
 	
 	$result = $db->query('SELECT * FROM "users" WHERE "email" LIKE \'%' . $login . '%\' ESCAPE \'\\\' AND "password" LIKE \'%' . $psswd . '%\' ESCAPE \'\\\' ORDER BY "id" ASC LIMIT 0, 49999;');
 	$val = $result->fetchArray(SQLITE3_ASSOC);	
 	
-	if( md5($val['email'] . $val['password']) == md5($login . $psswd) ) {
+	if( md5($val['email'] . $val['password']) == md5($login . $psswd) && $val['valid'] == '1' ) {
 		
 		$unum = $val['unum'];
 		
