@@ -24,7 +24,7 @@ class control {
 		
 			if(isset($_SESSION['ciu'])){
 
-				$result = $db->query('SELECT id,idsess,unum FROM "users" WHERE "idsess" LIKE \'%' . $id . '%\' ESCAPE  \'\\\' AND "unum" LIKE \'%' . $_SESSION['ciu'] . '%\' ESCAPE \'\\\' ORDER BY "id" DESC LIMIT 0, 49999;');
+				$result = $db->query('SELECT id,idsess,unum,valid FROM "users" WHERE "idsess" LIKE \'%' . $id . '%\' ESCAPE  \'\\\' AND "unum" LIKE \'%' . $_SESSION['ciu'] . '%\' ESCAPE \'\\\' ORDER BY "id" DESC LIMIT 0, 49999;');
 				$val = $result->fetchArray(SQLITE3_ASSOC);			
 				//var_dump($val);
 				

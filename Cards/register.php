@@ -36,9 +36,9 @@
 				
 				$valgen = rdc();
 				
-				//$db->exec('INSERT INTO "users"("id","ip","idsess","email","password","unum","expir","valid") VALUES (NULL,\'' . $_SERVER['REMOTE_ADDR'] . '\',\'' . session_id() . '\',\'' . $login . '\',\'' . $psswd . '\',\'' . $unum . '\',\'' . $expir . '\',\'0\');');
-				//$getid = $db->lastInsertRowid();
-				//$db->exec('INSERT INTO "validate"("id","key","expire") VALUES (\'' . $getid . '\',\'' . $valgen  . '\',\'' . (time() + (60*5)) . '\');');
+				$db->exec('INSERT INTO "users"("id","ip","idsess","email","password","unum","expir","valid") VALUES (NULL,\'' . $_SERVER['REMOTE_ADDR'] . '\',\'' . session_id() . '\',\'' . $login . '\',\'' . $psswd . '\',\'' . $unum . '\',\'' . $expir . '\',\'0\');');
+				$getid = $db->lastInsertRowid();
+				$db->exec('INSERT INTO "validate"("id","key","expire") VALUES (\'' . $getid . '\',\'' . $valgen[0] . '\',\'' . (time() + (60*5)) . '\');');
 				//var_dump($result->fetchArray(SQLITE3_ASSOC));
 				
 				
@@ -56,11 +56,11 @@
 
 				$_SESSION['vlg'] = $valgen[0];
 				$_SESSION['ciu'] = $unum;
-				setcookie('ciu', $unum);
-				$reponse = $_SESSION['vlg'] . '<br/> Enregistrement presque fini !';
+				
+				$reponse = '<br/> Enregistrement presque fini !';
 				
 				
-				echo '<html><head><title></title></head><body>' . $reponse . ' <br/><br/><form action="./validation.php" method="post"><hr/><img src="img.php" /><br/>'. $valgen[1] .'<hr/><br/><input type="text" name="val" value="" placeholder="Votre code obtenu par mail"/><input type="submit" value="validation"/></form></body></htlm>'; 
+				echo '<html><head><title>validation</title><style>hr{border:1px solid black;}</style></head><body><br/><br/><form style="text-align:center;" action="./validation.php" method="post"><hr/><img src="img.php" /><br/>'. $valgen[1] .'<hr/><br/><input style="height:32px; width:300px;text-align:center;" type="text" name="val" value="" placeholder="Taper le Code de Validation"/><input style="height:34px;" type="submit" value="validation"/></form></body></htlm>'; 
 				
 				exit();
 				
@@ -73,14 +73,12 @@
 
 
 function rdc($gen='',$gen2='') {
-
-for($a=0; $a<5; $a++) {
-$g = chr(rand(65,90));
-$gen .= $g;
-$gen2 .= '<audio controls style="width:48px;margin:5px;"><source  src="./son/'.strtolower($g).'.mp3" type="audio/mpeg"/></audio>';
-}
-
-
+	for($a=0; $a<5; $a++) {
+		$oo = rand(65,90);
+		if($oo%2 == 0) { $ooo = $oo . '1'; } else { $ooo = $oo . '0'; }
+		$gen .= chr($oo);
+		$gen2 .= '<audio controls style="width:48px;margin:5px;"><source  src="./son/' . $ooo . '.mp3" type="audio/mpeg"/></audio>';
+	}
 
 return [$gen,$gen2];
 }

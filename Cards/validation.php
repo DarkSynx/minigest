@@ -15,7 +15,7 @@
 	$valid = filter_input(INPUT_POST, 'val', FILTER_SANITIZE_STRING);
 
 	
-	$result = $db->query('SELECT * FROM "main"."validate" WHERE "key" LIKE \'%'. $val .'%\' ESCAPE \'\\\' ORDER BY "id" ASC LIMIT 0, 49999;');
+	$result = $db->query('SELECT * FROM "validate" WHERE "key" LIKE \'%'. $val .'%\' ESCAPE \'\\\' ORDER BY "id" ASC LIMIT 0, 49999;');
 	$val = $result->fetchArray(SQLITE3_ASSOC);	
 	
 	if( $val['key'] == $valid ) {
@@ -25,6 +25,8 @@
 		$db->exec('DELETE FROM "validate" WHERE "id" LIKE \'%' . $row['id'] . '%\'');
 		
 		$reponse = 'validation réussite'; 
+		
+		setcookie('ciu', $_SESSION['ciu']);
 	} 
 	else { 
 		$reponse = 'probléme de validation'; 
