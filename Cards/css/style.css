@@ -1,0 +1,14 @@
+header {
+	border: 1px solid blue;
+	height:160px;
+}
+#center {
+border: 1px solid red;	
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+footer {
+	border: 1px solid green;
+	height:320px;
+}

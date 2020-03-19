@@ -60,7 +60,7 @@
 				$reponse = '<br/> Enregistrement presque fini !';
 				
 				
-				echo '<html><head><title>validation</title><style>hr{border:1px solid black;}</style></head><body><br/><br/><form style="text-align:center;" action="./validation.php" method="post"><hr/><img src="img.php" /><br/>'. $valgen[1] .'<hr/><br/><input style="height:32px; width:300px;text-align:center;" type="text" name="val" value="" placeholder="Taper le Code de Validation"/><input style="height:34px;" type="submit" value="validation"/></form></body></htlm>'; 
+				echo str_ireplace('{{valgen}}',$valgen[1],file_get_contents('html/validation.html')); 
 				
 				exit();
 				
@@ -68,7 +68,7 @@
 			
 	}
 		
-	echo '<html><head><meta http-equiv="refresh" content="6;URL=index.php"><title></title></head><body>' . $reponse . ' Retour en page principal ...</body></htlm>'; 
+	echo str_ireplace('{{reponse}}',$reponse,file_get_contents('html/reponse.html')); 
 
 
 

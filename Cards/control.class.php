@@ -8,7 +8,7 @@ class control {
 
 	public function __construct($id, &$db) {
 		//$this->_db = &$db;
-	echo time(), '<br/>';
+	//echo time(), '<br/>';
 	
 	$results = $db->query('SELECT * FROM "validate" WHERE "id" ORDER BY "id" ASC LIMIT 0, 49999');
 	while ($row = $results->fetchArray(SQLITE3_ASSOC)) {
@@ -19,8 +19,9 @@ class control {
 	}
 		
 		$nolog = true;
-		echo '['.$_SESSION['ciu'].']' . '<br/>';
-		echo '>'.$_COOKIE['ciu'].'<' . '<br/>';
+		//echo '['.$_SESSION['ciu'].']' . '<br/>';
+		//echo '>'.$_COOKIE['ciu'].'<' . '<br/>';
+		//echo '>'.$_COOKIE['ctr'].'<' . '<br/>';
 		
 			if(isset($_SESSION['ciu'])){
 
@@ -36,7 +37,15 @@ class control {
 			
 			
 			if( $nolog ) {
-				$this->loadpage('page de login',['login','register']);
+				if(isset($_COOKIE['ctr']) && $_COOKIE['ctr'] == 'register'){
+					
+					setcookie('ctr', 'null');
+					$this->loadpage('page de d\'enregistrement',['register']);
+					
+						
+				} else {
+					$this->loadpage('page de login',['login']);
+				}
 			}
 		
 	}
@@ -62,16 +71,19 @@ class control {
 	
 	private function head($name='',$link=[],$style='',$links='') {
 		foreach($link as $l){ $links .= "<script type=\"text/javascript\" src=\"js/$l\"></script>\r\n";}
+		$links .= '<link href="css/style.css" type="text/css" rel="stylesheet" />';
 		$this->_head .= "<title>$name</title>$links<style>$style</style>";
 	}
 	
-
+	
 	
 	
 	/*------------------------------------------------------*/
 	
 	private function page() {
-		echo '<html><head>' . $this->_head . '</head><body>' . $this->_body . '</body></html>';
+		$header = file_get_contents('html/header.html');
+		$footer = file_get_contents('html/footer.html');	
+		echo '<html><head>' . $this->_head . '</head><body>' . $header  . '<div id="center">' . $this->_body . '</div>' .  $footer . '</body></html>';
 	}
 
 

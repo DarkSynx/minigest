@@ -1,6 +1,16 @@
 <h1>Enregistrement</h1>
+<p>*<i>Si vous avez un probléme avec l'étape de validation attendez 5min et réenregistrer vous</i></p>
 <form action="./register.php" method="post">
 <input type="mail" name="login" value="admin@admin.local" placeholder="Votre adresse mail"/>
-<input type="password" name="psswd" value="password"/>
+<a id="viewpswd" href="#"/>Afficher</a>
+<input id="pswdreg" type="password" name="psswd" value="password"/>
 <input type="submit" value="Enregistrer"/>
 </form>
+<script>
+$("a#viewpswd").on('click',function(){
+if($("input#pswdreg").attr("type") == "password") {
+$("input#pswdreg").attr("type","text");
+} else {
+$("input#pswdreg").attr("type","password");}
+});
+</script>

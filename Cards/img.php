@@ -1,7 +1,7 @@
 <?php
 session_start();
 // Définition du content-type
-header('Content-Type: image/png');
+//header('Content-Type: image/png');
 
 // Création de l'image
 $im = imagecreatetruecolor(450, 200);
