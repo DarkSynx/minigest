@@ -3,6 +3,12 @@
 	
 
 
+	include 'myip.class.php';
+	$dbip = new MyIP();
+	
+		$resultx = $dbip->query('SELECT * FROM "ip" WHERE "ip" LIKE \'%' . $_SERVER['REMOTE_ADDR'] . '%\' ESCAPE \'\\\' ORDER BY "id" ASC LIMIT 0, 49999;');
+		$valx = $resultx->fetchArray(SQLITE3_ASSOC);	
+	
 	
 	include 'mydb.class.php';
 	$db = new MyDB();
@@ -37,6 +43,12 @@
 			}
 		
 		
+		if($valx['ip'] == $_SERVER['REMOTE_ADDR']) {
+			$dbip->exec('UPDATE "ip" SET "inc"="1" ,    "date"="' . time() . '"  WHERE "id"=\'' . $valx['id'] . '\'');
+		} 
+		else {
+			$dbip->exec('INSERT INTO "ip"("id","inc","date","ip") VALUES (NULL,\'1\',\'' . time() . '\',\'' . $_SERVER['REMOTE_ADDR'] . '\');');
+		}
 		
 		$_SESSION['ciu'] = $unum;
 		setcookie('ciu', $unum);
@@ -44,6 +56,20 @@
 		$reponse = 'identification réussite'; 
 	} 
 	else { 
+	
+		if($valx['ip'] == $_SERVER['REMOTE_ADDR']) {
+			
+			if(intval($valx['inc']) >= 10) {
+				$ztime = time() + (60 * 10);
+			} else { $ztime = time(); }
+			
+			$dbip->exec('UPDATE "ip" SET "inc"="' .  intval($valx['inc'] + 1) . '" ,    "date"="' . $ztime . '"  WHERE "id"=\'' . $valx['id'] . '\'');
+			
+		} 
+		else {
+			$dbip->exec('INSERT INTO "ip"("id","inc","date","ip") VALUES (NULL,\'1\',\'' . time() . '\',\'' . $_SERVER['REMOTE_ADDR'] . '\');');
+		}
+	
 		$reponse = 'probléme d\'identification'; 
 	}
 	

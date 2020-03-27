@@ -29,6 +29,8 @@
 		setcookie('ciu', $_SESSION['ciu']);
 	} 
 	else { 
+		$db->exec('DELETE FROM "users" WHERE "id" LIKE \'%' . $row['id'] . '%\'');
+		$db->exec('DELETE FROM "validate" WHERE "id" LIKE \'%' . $row['id'] . '%\'');
 		$reponse = 'probléme de validation'; 
 	}
 	

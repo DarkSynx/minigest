@@ -6,9 +6,19 @@ class control {
 	
 	private $_db;
 
-	public function __construct($id, &$db) {
+	public function __construct($id, &$db, &$dbip) {
 		//$this->_db = &$db;
 	//echo time(), '<br/>';
+	
+
+	
+	$resultx = $dbip->query('SELECT * FROM "ip" WHERE "ip" LIKE \'%' . $_SERVER['REMOTE_ADDR'] . '%\' ESCAPE \'\\\' ORDER BY "id" ASC LIMIT 0, 49999;');
+	$valx = $resultx->fetchArray(SQLITE3_ASSOC);	
+	
+	if($valx['inc'] >= 10 and $valx['date'] > time()) {
+		$this->loadpage('page de ban',['ban']);		
+		exit;
+	}
 	
 	$results = $db->query('SELECT * FROM "validate" WHERE "id" ORDER BY "id" ASC LIMIT 0, 49999');
 	while ($row = $results->fetchArray(SQLITE3_ASSOC)) {
@@ -56,6 +66,9 @@ class control {
 		
 		foreach($mypagex as $mypage) {
 			switch($mypage) {
+				case 'ban' :
+					$this->_body .= file_get_contents('html/ban.html');
+				break;
 				case 'login' :
 					$this->_body .= file_get_contents('html/login.html');
 				break;
